@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Retention Action Intelligence Model</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <header class="navbar">
+            <div class="logo-group">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-brain-circuit"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>HR Retention Action Predictor</h1>
+
+                </div>
+            </div>
+
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-grid">
+            <!-- Left Column: Input Form & Preset Samples -->
+            <section class="card input-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-pen-to-square"></i> Employee Exit / Feedback Analysis</h2>
+                    <p class="description">Enter employee exit reasons, performance review feedback, or HR notes to
+                        generate AI-recommended retention actions.</p>
+                </div>
+
+                <form id="predictionForm" onsubmit="handlePrediction(event)">
+                    <div class="form-group">
+                        <label for="feedbackText">Employee Feedback / Exit Reason Text</label>
+                        <textarea id="feedbackText" name="text" rows="5"
+                            placeholder="e.g. Employee reported severe burnout due to long working hours and expressed interest in flexible remote work options..."
+                            required></textarea>
+                    </div>
+
+                    <div class="action-bar">
+                        <button type="button" class="btn btn-secondary" onclick="clearInput()">
+                            <i class="fa-solid fa-eraser"></i> Clear
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="predictBtn">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Predict Retention Action
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Column: Results & AI Recommendations -->
+            <section class="card result-card" id="resultCard">
+                <!-- Initial Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3>No Analysis Yet</h3>
+                    <p>Enter text on the left to view AI retention recommendations and confidence analytics.</p>
+                </div>
+
+                <!-- Loader State -->
+                <div class="loader-container hidden" id="loader">
+                    <div class="spinner"></div>
+                    <p>Analyzing NLP Text Features & Model Weights...</p>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="results-content hidden" id="resultsContent">
+                    <div class="result-header">
+                        <span class="result-label">Recommended Action</span>
+                        <div class="action-badge-container">
+                            <span class="action-badge" id="actionBadge">Salary Hike</span>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Metric Bar -->
+                    <div class="confidence-box">
+                        <div class="confidence-info">
+                            <span>Model Confidence Score</span>
+                            <span class="confidence-value" id="confidenceValue">87.5%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="confidenceFill" style="width: 87.5%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- HR Strategy Guide Card -->
+                    <div class="strategy-card" id="strategyCard">
+                        <div class="strategy-header">
+                            <i class="fa-solid fa-shield-heart" id="strategyIcon"></i>
+                            <div>
+                                <h4 id="strategyTitle">Recommended HR Strategy</h4>
+                                <span class="urgency-tag" id="urgencyTag">Urgency: High</span>
+                            </div>
+                        </div>
+                        <p class="strategy-text" id="strategyText">Strategy details will appear here.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Analytics Overview Footer/Bar -->
+        <footer class="analytics-bar">
+            <div class="stat-item">
+                <i class="fa-solid fa-database"></i>
+                <div>
+                    <span class="stat-num" id="statTotal">10,000</span>
+                    <span class="stat-lbl">Dataset Records</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-user-xmark"></i>
+                <div>
+                    <span class="stat-num" id="statAttrition">2,080</span>
+                    <span class="stat-lbl">Historical Attritions</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-bullseye"></i>
+                <div>
+                    <span class="stat-num">6 Categories</span>
+                    <span class="stat-lbl">Retention Actions</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-check-double"></i>
+                <div>
+                    <span class="stat-num">Active</span>
+                    <span class="stat-lbl">retention_action_model.pkl</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
